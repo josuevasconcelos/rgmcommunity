@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="panel panel-primary col-md-6 col-lg-9">
-        <div class="panel-heading">{{ $role->description }} Functionalities</div>
+        <div class="title">{{ $role->description }} Functionalities</div>
         <div class="panel-body">
             <ul class="list-group">
                 @foreach($role->functionalities as $functionality)

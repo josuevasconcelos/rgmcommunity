@@ -1,0 +1,45 @@
+.title {
+    padding-bottom: 20px;
+    font-size: 35px;
+}
+
+.list {
+    padding-bottom: 20px;
+    font-size: 15px;
+}
+
+.boxes {
+    float: left;
+    width: 35px;
+    height: 35px;
+    margin: 2px;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 10%;
+}
+
+.itemBold{
+    font-weight: bold;
+}
+
+.listItemLeftSide{
+    float: left;
+}
+
+.listItemRightSide{
+    float: right;
+}
+
+.listItemBoldAndLeftSide{
+    font-weight: bold;
+    float: left;
+}
+
+#createTemplateLeftDiv{
+    float: left;
+    padding-right: 150px;
+}
+
+#createTemplateContent{
+    padding-top: 85px;
+}

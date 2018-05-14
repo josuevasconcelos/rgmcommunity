@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Element;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class ElementsController extends Controller
 {
@@ -15,6 +17,10 @@ class ElementsController extends Controller
     public function index()
     {
         //
+
+        $elements = Element::all();
+
+        return view('elements.index', ['elements'=> $elements]);
     }
 
     /**
@@ -25,6 +31,8 @@ class ElementsController extends Controller
     public function create()
     {
         //
+
+        return view('elements.create');
     }
 
     /**
@@ -36,6 +44,26 @@ class ElementsController extends Controller
     public function store(Request $request)
     {
         //
+        if(Auth::check()){
+            if($request->hasFile('image')){
+                $image = $request->file('image');
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                Image::make($image)->save( public_path('/uploads/elements/' . $filename) );
+
+                $element = Element::create([
+                    'name' => $request->input('name'),
+                    'image' => $filename,
+                ]);
+
+                if($element){
+                    return redirect()->route('elements.index', ['element' => $element->id])
+                        ->with('success', 'Element created');
+                }
+            }
+
+            return back()->withInput()->with('error', 'Error creating');
+        }
+
     }
 
     /**
@@ -46,7 +74,8 @@ class ElementsController extends Controller
      */
     public function show(Element $element)
     {
-        //
+        $element = Element::find($element->id);
+        return view('elements.show', ['element'=>$element]);
     }
 
     /**

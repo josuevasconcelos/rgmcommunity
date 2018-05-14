@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Auth;
+use Intervention\Image\Facades\Image;
 
 class UsersController extends Controller
 {
@@ -12,6 +14,7 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         //
@@ -100,5 +103,24 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function profile(){
+        return view('profile', array('user' => Auth::user()));
+    }
+
+    public function updateAvatar(Request $request){
+
+        if($request->hasFile('avatar')){
+            $avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)->save( public_path('/uploads/avatars/' . $filename) );
+
+            $user = Auth::user();
+            $user->avatar = $filename;
+            $user->save();
+        }
+
+        return view('profile', array('user' => Auth::user()));
     }
 }

@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('cellphoneNumber')->nullable();
             $table->string('country')->nullable();
             $table->string('communityRGM')->nullable();
-            $table->binary('picture')->nullable();
+            $table->string('avatar')->default('default.jpg');
             $table->string('otherInformation')->nullable();
             $table->string('status')->nullable();
             $table->string('typeOfPatient')->nullable();

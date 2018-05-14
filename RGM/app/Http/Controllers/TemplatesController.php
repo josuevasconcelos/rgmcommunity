@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Template;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TemplatesController extends Controller
 {
@@ -14,7 +15,9 @@ class TemplatesController extends Controller
      */
     public function index()
     {
-        //
+        $templates = Template::all();
+
+        return view('templates.index', ['templates'=> $templates]);
     }
 
     /**
@@ -24,7 +27,7 @@ class TemplatesController extends Controller
      */
     public function create()
     {
-        //
+        return view('templates.create');
     }
 
     /**
@@ -35,7 +38,21 @@ class TemplatesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Auth::check()){
+            $template = Template::create([
+                'name' => $request->input('name'),
+                'numberOfColumns' => $request->input('numberOfColumns'),
+                'numberOfLines' => $request->input('numberOfLines'),
+                'numberOfBlocks' => $request->input('numberOfBlocks'),
+            ]);
+
+            if($template){
+                return redirect()->route('templates.index', ['template' => $template->id])
+                    ->with('success', 'Template created');
+            }
+        }
+
+        return back()->withInput()->with('error', 'Error creating');
     }
 
     /**
@@ -46,7 +63,8 @@ class TemplatesController extends Controller
      */
     public function show(Template $template)
     {
-        //
+        $template = Template::find($template->id);
+        return view('templates.show', ['template'=>$template]);
     }
 
     /**

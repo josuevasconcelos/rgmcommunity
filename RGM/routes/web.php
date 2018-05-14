@@ -19,6 +19,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('profile', 'UsersController@profile');
+Route::post('profile', 'UsersController@updateAvatar');
+
 Route::resource('audios', 'AudiosController');
 Route::resource('elements', 'ElementsController');
 Route::resource('templates', 'TemplatesController');

@@ -65,7 +65,6 @@ class FunctionalitiesController extends Controller
      */
     public function show(Functionality $functionality)
     {
-        //
         $functionality = Functionality::find($functionality->id);
         return view('functionalities.show', ['functionality'=>$functionality]);
     }

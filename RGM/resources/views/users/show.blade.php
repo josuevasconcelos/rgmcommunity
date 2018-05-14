@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="panel panel-primary col-md-6 col-lg-9">
-        <div class="panel-heading">{{ $user->name }}</div>
+        <h3 class="title">{{ $user->name }} Information</h3>
         <div class="panel-body">
             <ul class="list-group">
                 @foreach($roles as $role)

@@ -6,8 +6,8 @@
 @extends('layouts.sidebar')
 
 @section('content')
-    <div class="panel panel-primary col-md-6 col-lg-9" style="padding-top: 30px;padding-left: 50px;">
-        <h3 class="panel-heading" style="padding-bottom: 30px;">Edit Associations</h3>
+    <div class="panel panel-primary col-md-6 col-lg-9">
+        <h3 class="title">Create Associations</h3>
         <div class="panel-body">
             <ul class="list-group">
                 <form method="POST" action="{{ route('functionalitiesroles.store') }}">

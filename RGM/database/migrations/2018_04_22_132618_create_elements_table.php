@@ -17,8 +17,8 @@ class CreateElementsTable extends Migration
             Schema::create('elements', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
-                $table->binary('image');
-                $table->binary('animation');
+                $table->string('image')->default('default.jpg');
+                //$table->string('animation');
                 $table->timestamps();
             });
         }

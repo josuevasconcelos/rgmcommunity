@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="panel panel-primary col-md-6 col-lg-9">
-        <h3 class="panel-heading">Users</h3>
+        <h3 class="title">Edit User - {{ $user->name }}</h3>
         <div class="panel-body">
             <ul class="list-group">
                 <form method="POST" action="{{ route('users.update', [$user->id]) }}">

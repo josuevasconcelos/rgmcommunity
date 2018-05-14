@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="panel panel-primary col-md-6 col-lg-9">
-        <h3 class="panel-heading">Users</h3>
+        <h3 class="title">Manage Users</h3>
         <div class="panel-body">
             <ul class="list-group">
                 @foreach($users as $user)
@@ -18,7 +18,6 @@
                         @endif
                     @endforeach
                 @endforeach
-
             </ul>
         </div>
     </div>

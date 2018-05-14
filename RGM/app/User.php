@@ -25,7 +25,7 @@ class User extends Authenticatable
         'cellphoneNumber',
         'country',
         'communityRGM',
-        'picture',
+        'avatar',
         'otherInformation',
         'status',
         'typeOfPatient',

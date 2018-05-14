@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="panel panel-primary col-md-6 col-lg-9">
-        <h3 class="panel-heading">Manage Associations <a class="pull-right btn btn-primary btn-sm" href="functionalitiesroles/create">Create Association</a></h3>
+        <h3 class="title">Manage Associations <a class="pull-right btn btn-primary btn-sm" href="functionalitiesroles/create">Create Association</a></h3>
         <div class="panel-body">
             <ul class="list-group">
                 @foreach($functionalitiesroles as $functionalityrole)
