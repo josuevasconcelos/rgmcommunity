@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Audio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AudiosController extends Controller
 {
@@ -14,7 +17,6 @@ class AudiosController extends Controller
      */
     public function index()
     {
-        //
         $audios = Audio::all();
 
         return view('audios.index', ['audios'=> $audios]);
@@ -27,7 +29,7 @@ class AudiosController extends Controller
      */
     public function create()
     {
-        //
+        return view('audios.create');
     }
 
     /**
@@ -38,7 +40,27 @@ class AudiosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        if(Auth::check()) {
+            if ($request->hasFile('song')) {
+                $song = $request->file('song');
+                $filename = time() . '.' . $song->getClientOriginalExtension();
+                $song->move(public_path('/uploads/audios'), $filename);
+
+                $audio = Audio::create([
+                    'artist' => $request->input('artist'),
+                    'name' => $request->input('name'),
+                    'song' => $filename
+                ]);
+
+                if ($audio) {
+                    return redirect()->route('audios.index', ['audio' => $audio->id])
+                        ->with('success', 'Audio created');
+                }
+            }
+
+            return back()->withInput()->with('error', 'Error creating');
+        }
     }
 
     /**
@@ -49,8 +71,8 @@ class AudiosController extends Controller
      */
     public function show(Audio $audio)
     {
-
         $audio = Audio::find($audio->id);
+
         return view('audios.show', ['audio'=>$audio]);
     }
 
@@ -62,7 +84,7 @@ class AudiosController extends Controller
      */
     public function edit(Audio $audio)
     {
-        //
+
     }
 
     /**
@@ -74,7 +96,7 @@ class AudiosController extends Controller
      */
     public function update(Request $request, Audio $audio)
     {
-        //
+
     }
 
     /**
@@ -85,6 +107,23 @@ class AudiosController extends Controller
      */
     public function destroy(Audio $audio)
     {
-        //
+
+    }
+
+    public function searchAudio(Request $request){
+        if($request->ajax()){
+            $output = "";
+            $audios = DB::table('audios')->where('name', 'LIKE', '%'.$request->searchAudio.'%')
+                ->orWhere('artist', 'LIKE', '%'.$request->searchAudio.'%')->get();
+
+            foreach ($audios as $key => $audio){
+                $output .= '<li class="list-group-item">'. $audio->artist . " - " . $audio->name .
+                    ' <a href="/audios/' . $audio->id .
+                    '">View Details</a> | <a href="/audios/' . $audio->id  .
+                    '/edit">Edit</a></li>';
+            }
+
+            return Response($output);
+        }
     }
 }

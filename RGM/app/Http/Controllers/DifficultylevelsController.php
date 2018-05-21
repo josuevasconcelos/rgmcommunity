@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Difficultylevel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DifficultylevelsController extends Controller
 {
@@ -14,7 +16,9 @@ class DifficultylevelsController extends Controller
      */
     public function index()
     {
-        //
+        $difficultylevels = Difficultylevel::all();
+
+        return view('difficultylevels.index', ['difficultylevels'=> $difficultylevels]);
     }
 
     /**
@@ -24,7 +28,7 @@ class DifficultylevelsController extends Controller
      */
     public function create()
     {
-        //
+        return view('difficultylevels.create');
     }
 
     /**
@@ -35,7 +39,18 @@ class DifficultylevelsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Auth::check()){
+            $difficultylevel = Difficultylevel::create([
+                'description' => $request->input('description'),
+            ]);
+
+            if($difficultylevel){
+                return redirect()->route('difficultylevels.index', ['difficultylevel' => $difficultylevel->id])
+                    ->with('success', 'Difficulty level created with success');
+            }
+        }
+
+        return back()->withInput()->with('error', 'Error creating difficulty level');
     }
 
     /**
@@ -57,7 +72,9 @@ class DifficultylevelsController extends Controller
      */
     public function edit(Difficultylevel $difficultylevel)
     {
-        //
+        $difficultylevel = Difficultylevel::find($difficultylevel->id);
+
+        return view('difficultylevels.edit', ['difficultylevel'=>$difficultylevel]);
     }
 
     /**
@@ -69,7 +86,16 @@ class DifficultylevelsController extends Controller
      */
     public function update(Request $request, Difficultylevel $difficultylevel)
     {
-        //
+        $difficultylevelUpdate = Difficultylevel::where('id', $difficultylevel->id)->update([
+            'description' => $request->input('description'),
+        ]);
+
+        if($difficultylevelUpdate){
+            return redirect()->route('difficultylevels.index', ['difficultylevel'=>$difficultylevel->id])
+                ->with('success', 'Difficulty Level updated');
+        }
+
+        return back()->withInput();
     }
 
     /**
@@ -82,4 +108,6 @@ class DifficultylevelsController extends Controller
     {
         //
     }
+
+
 }

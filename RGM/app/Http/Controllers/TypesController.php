@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TypesController extends Controller
 {
@@ -14,7 +16,9 @@ class TypesController extends Controller
      */
     public function index()
     {
-        //
+        $types = Type::all();
+
+        return view('types.index', ['types'=> $types]);
     }
 
     /**
@@ -24,7 +28,7 @@ class TypesController extends Controller
      */
     public function create()
     {
-        //
+        return view('types.create');
     }
 
     /**
@@ -35,7 +39,17 @@ class TypesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Auth::check()){
+            $type = Type::create([
+                'description' => $request->input('description'),
+            ]);
+
+            if($type){
+                return redirect()->route('types.index', ['type' => $type->id])->with('success', 'Type created with success');
+            }
+        }
+
+        return back()->withInput()->with('error', 'Error creating Type');
     }
 
     /**
@@ -57,7 +71,9 @@ class TypesController extends Controller
      */
     public function edit(Type $type)
     {
-        //
+        $type = Type::find($type->id);
+
+        return view('types.edit', ['type'=>$type]);
     }
 
     /**
@@ -69,7 +85,16 @@ class TypesController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        //
+        $typeUpdate = Type::where('id', $type->id)->update([
+            'description' => $request->input('description'),
+        ]);
+
+        if($typeUpdate){
+            return redirect()->route('types.index', ['type'=>$type->id])
+                ->with('success', 'Type updated');
+        }
+
+        return back()->withInput();
     }
 
     /**
@@ -81,5 +106,21 @@ class TypesController extends Controller
     public function destroy(Type $type)
     {
         //
+    }
+
+    public function searchType(Request $request){
+        if($request->ajax()){
+            $output = "";
+            $types = DB::table('types')->where('description', 'LIKE', '%'.$request->searchType.'%')->get();
+
+            foreach ($types as $key => $type){
+                $output .= '<li class="list-group-item">'. $type->description .
+                    ' <a href="/types/' . $type->id .
+                    '">View Details</a> | <a href="/types/' . $type->id  .
+                    '/edit">Edit</a></li>';
+            }
+
+            return Response($output);
+        }
     }
 }

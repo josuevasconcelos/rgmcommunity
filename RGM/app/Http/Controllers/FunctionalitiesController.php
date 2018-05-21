@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Functionality;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FunctionalitiesController extends Controller
 {
@@ -15,7 +16,7 @@ class FunctionalitiesController extends Controller
      */
     public function index()
     {
-        //
+
         $functionalities = Functionality::all();
 
         return view('functionalities.index', ['functionalities'=> $functionalities]);
@@ -28,8 +29,6 @@ class FunctionalitiesController extends Controller
      */
     public function create()
     {
-        //
-
         return view('functionalities.create');
     }
 
@@ -91,8 +90,6 @@ class FunctionalitiesController extends Controller
      */
     public function update(Request $request, Functionality $functionality)
     {
-        //
-
         $functionalityUpdate = Functionality::where('id', $functionality->id)->update([
             'description' => $request->input('description'),
         ]);
@@ -113,14 +110,28 @@ class FunctionalitiesController extends Controller
      */
     public function destroy(Functionality $functionality)
     {
-        //
         /*
         $findFunctionality = Functionality::find($functionality->id);
         if($findFunctionality->delete()){
             return redirect()->route('functionalities')->with('success', 'Functionality deleted');
         }
 
-        return back()->withInput()->with('error', 'Functionality not deleted')*/
-        //dd($functionality);
+        return back()->withInput()->with('error', 'Functionality not deleted');*/
+    }
+
+    public function searchFunctionality(Request $request){
+        if($request->ajax()){
+            $output = "";
+            $functionalities = DB::table('functionalities')->where('description', 'LIKE', '%'.$request->searchFunctionality.'%')->get();
+
+            foreach ($functionalities as $key => $functionality){
+                $output .= '<li class="list-group-item">'. $functionality->description.
+                    ' <a href="/functionalities/' . $functionality->id .
+                    '">View Details</a> | <a href="/functionalities/' . $functionality->id  .
+                    '/edit">Edit</a></li>';
+            }
+
+            return Response($output);
+        }
     }
 }

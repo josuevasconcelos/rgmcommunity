@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 
 class UsersController extends Controller
@@ -52,7 +53,6 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        //
         $user = User::find($user->id);
 
         return view('users.show', ['user'=>$user]);
@@ -122,5 +122,22 @@ class UsersController extends Controller
         }
 
         return view('profile', array('user' => Auth::user()));
+    }
+
+    public function searchUser(Request $request){
+        if($request->ajax()){
+            $output = "";
+            $users = DB::table('users')->where('name', 'LIKE', '%'.$request->searchUser.'%')
+                        ->orWhere('email', 'LIKE', '%'.$request->searchUser.'%')->get();
+
+            foreach ($users as $key => $user){
+                $output .= '<li class="list-group-item">'. $user->name .
+                    ' <a href="/users/' . $user->id .
+                    '">View Details</a> | <a href="/users/' . $user->id  .
+                    '/edit">Edit</a></li>';
+            }
+
+            return Response($output);
+        }
     }
 }

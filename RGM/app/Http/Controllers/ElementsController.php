@@ -6,6 +6,7 @@ use App\Element;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\DB;
 
 class ElementsController extends Controller
 {
@@ -16,8 +17,6 @@ class ElementsController extends Controller
      */
     public function index()
     {
-        //
-
         $elements = Element::all();
 
         return view('elements.index', ['elements'=> $elements]);
@@ -30,8 +29,6 @@ class ElementsController extends Controller
      */
     public function create()
     {
-        //
-
         return view('elements.create');
     }
 
@@ -43,7 +40,6 @@ class ElementsController extends Controller
      */
     public function store(Request $request)
     {
-        //
         if(Auth::check()){
             if($request->hasFile('image')){
                 $image = $request->file('image');
@@ -63,7 +59,6 @@ class ElementsController extends Controller
 
             return back()->withInput()->with('error', 'Error creating');
         }
-
     }
 
     /**
@@ -110,5 +105,21 @@ class ElementsController extends Controller
     public function destroy(Element $element)
     {
         //
+    }
+
+    public function searchElement(Request $request){
+        if($request->ajax()){
+            $output = "";
+            $elements = DB::table('elements')->where('name', 'LIKE', '%'.$request->searchElement.'%')->get();
+
+            foreach ($elements as $key => $element){
+                $output .= '<li class="list-group-item">'. $element->name .
+                    ' <a href="/elements/' . $element->id .
+                    '">View Details</a> | <a href="/elements/' . $element->id  .
+                    '/edit">Edit</a></li>';
+            }
+
+            return Response($output);
+        }
     }
 }

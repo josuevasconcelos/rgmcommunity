@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RolesController extends Controller
 {
@@ -86,5 +87,20 @@ class RolesController extends Controller
     public function destroy(Role $role)
     {
         //
+    }
+
+    public function searchRole(Request $request){
+        if($request->ajax()){
+            $output = "";
+            $roles = DB::table('roles')->where('description', 'LIKE', '%'.$request->searchRole.'%')->get();
+
+            foreach ($roles as $key => $role){
+                $output .= '<li class="list-group-item">'.
+                    '<a href="/roles/' . $role->id .
+                    '"/>' . $role->id . ' - ' . $role->description .'</li>';
+            }
+
+            return Response($output);
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Template;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TemplatesController extends Controller
 {
@@ -99,5 +100,56 @@ class TemplatesController extends Controller
     public function destroy(Template $template)
     {
         //
+    }
+
+    public function searchTemplate(Request $request){
+        if($request->ajax()){
+            $output = "";
+            $templates = DB::table('templates')->where('name', 'LIKE', '%'.$request->searchTemplate.'%')->get();
+
+            foreach ($templates as $key => $template){
+                $output .= '<li class="list-group-item">'. $template->name .
+                    ' <a href="/templates/' . $template->id .
+                    '">View Details</a> | <a href="/templates/' . $template->id  .
+                    '/edit">Edit</a></li>';
+            }
+
+            return Response($output);
+        }
+    }
+
+    public function getTotalOfTemplates(Request $request){
+        if($request->ajax()){
+            $count = DB::table('templates')->count();
+
+            return Response($count);
+        }
+    }
+
+    public function getNumberOfColumns(Request $request){
+        if($request->ajax()){
+            $templates = DB::table('templates')->where('id', '=', $request->getNumberOfColumns)->get();
+            $numberOfColumns = $templates[0]->numberOfColumns;
+
+            return Response($numberOfColumns);
+        }
+    }
+
+    public function getNumberOfLines(Request $request){
+        if($request->ajax()){
+            $templates = DB::table('templates')->where('id', '=', $request->getNumberOfLines)->get();
+            $numberOfLines = $templates[0]->numberOfLines;
+
+            return Response($numberOfLines);
+        }
+    }
+
+    public function getNumberOfBlocks(Request $request){
+        if($request->ajax()){
+            $templates = DB::table('templates')->where('id', '=', $request->getNumberOfBlocks)->get();
+            $numberOfBlocks = $templates[0]->numberOfBlocks;
+
+            return Response($numberOfBlocks);
+        }
     }
 }

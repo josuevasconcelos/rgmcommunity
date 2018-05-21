@@ -101,6 +101,12 @@ class FunctionalitiesRolesController extends Controller
      */
     public function destroy(FunctionalityRole $functionalityRole)
     {
-        //
+        /*$findFunctionalityRole = FunctionalityRole::find($functionalityRole);
+        dd($findFunctionalityRole);
+        if($findFunctionalityRole->delete()){
+            return redirect()->route('functionalitiesroles.index')->with('success', 'Association deleted with success');
+        }
+
+        return back()->withInput()->with('error', 'Project not deleted');*/
     }
 }

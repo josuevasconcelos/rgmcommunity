@@ -10,12 +10,9 @@
 
 .boxes {
     float: left;
-    width: 35px;
-    height: 35px;
-    margin: 2px;
-    padding: 5px;
+    width: 40px;
+    height: 40px;
     border: 1px solid black;
-    border-radius: 10%;
 }
 
 .itemBold{
@@ -35,11 +32,33 @@
     float: left;
 }
 
-#createTemplateLeftDiv{
+#createTemplateLeftDiv, #createProjectLeftDiv{
     float: left;
-    padding-right: 150px;
+    padding-right: 125px;
 }
 
 #createTemplateContent{
     padding-top: 85px;
+}
+
+#showTemplateContent {
+    float: left;
+}
+
+#scrollElements{
+    width: 100px;
+    height: 500px;
+    overflow: hidden;
+    overflow-y: auto;
+    margin: 0 auto;
+    white-space: nowrap;
+}
+
+#list {
+    padding-top: 20px;
+}
+
+#search {
+    background: url("../assets/searchIcon.png") no-repeat scroll 7px 7px;
+    padding-left:30px;
 }

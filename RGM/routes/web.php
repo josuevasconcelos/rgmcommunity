@@ -36,3 +36,17 @@ Route::resource('functionalities', 'FunctionalitiesController');
 Route::resource('functionalitiesroles', 'FunctionalitiesRolesController');
 Route::resource('elementsprojects', 'ElementsProjectsController');
 Route::resource('projectsusers', 'ProjectsUsersController');
+
+Route::get('/searchElement', 'ElementsController@searchElement');
+Route::get('/searchAudio', 'AudiosController@searchAudio');
+Route::get('/searchFunctionality', 'FunctionalitiesController@searchFunctionality');
+Route::get('/searchRole', 'RolesController@searchRole');
+Route::get('/searchUser', 'UsersController@searchUser');
+Route::get('/searchTemplate', 'TemplatesController@searchTemplate');
+Route::get('/searchDifficultylevel', 'DifficultylevelsController@searchDifficultylevel');
+Route::get('/searchType', 'TypesController@searchType');
+
+Route::get('/getTotalOfTemplates', 'TemplatesController@getTotalOfTemplates');
+Route::get('/getNumberOfColumns', 'TemplatesController@getNumberOfColumns');
+Route::get('/getNumberOfLines', 'TemplatesController@getNumberOfLines');
+Route::get('/getNumberOfBlocks', 'TemplatesController@getNumberOfBlocks');

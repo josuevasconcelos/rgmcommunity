@@ -18,7 +18,7 @@ class CreateAudiosTable extends Migration
                 $table->increments('id');
                 $table->string('name');
                 $table->string('artist');
-                $table->time('duration');
+                $table->string('song');
                 $table->timestamps();
             });
         }

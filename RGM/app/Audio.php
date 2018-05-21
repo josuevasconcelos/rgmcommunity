@@ -13,7 +13,7 @@ class Audio extends Model
     protected $fillable = [
         'name',
         'artist',
-        'duration',
+        'song',
     ];
 
     public function projects(){

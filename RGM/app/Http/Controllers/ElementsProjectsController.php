@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ElementProject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ElementsProjectsController extends Controller
 {
@@ -25,6 +26,7 @@ class ElementsProjectsController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -36,6 +38,8 @@ class ElementsProjectsController extends Controller
     public function store(Request $request)
     {
         //
+        $project_id = Session::get('project_id');
+        echo $project_id;
     }
 
     /**

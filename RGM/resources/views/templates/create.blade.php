@@ -36,8 +36,7 @@
             </ul>
         </div>
         <div id="createTemplateContent">
-
+            <script type="text/javascript" src="{{ asset('js/previewTemplate.js') }}"></script>
         </div>
-        <script type="text/javascript" src="{{ asset('js/previewTemplate.js') }}"></script>
     </div>
 @endsection

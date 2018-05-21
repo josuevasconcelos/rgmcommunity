@@ -38,6 +38,8 @@
     </div>
 
     <div class="main">
+        @include('partials.errors')
+        @include('partials.success')
         @yield('content')
     </div>
 

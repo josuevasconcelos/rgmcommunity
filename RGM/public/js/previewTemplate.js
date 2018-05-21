@@ -20,12 +20,12 @@ function showTemplate(){
         var tables = blocks;
         var rows = lines;
         var cols = columns;
-        for(var t = 0; t < tables; t++){
+        for(var t = 1; t <= tables; t++){
             table += '<table style="display: inline-block; margin: 10px;">';
-            for(var r = 0; r < rows; r++){
+            for(var r = 1; r <= rows; r++){
                 table += '<tr>';
                 for(var c = 1; c <= cols; c++){
-                    table += '<td class="boxes">' + '</td>';
+                    table += '<td class="boxes" id=""c+r+t"">' + c+r+t + '</td>';
                 }
                 table += '</tr>';
             }

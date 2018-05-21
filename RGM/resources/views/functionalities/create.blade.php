@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="panel panel-primary col-md-6 col-lg-9">
-        <h3 class="title">Create Functionaly</h3>
+        <h3 class="title">Create Functionality</h3>
         <div class="panel-body">
             <ul class="list-group">
                 <form method="POST" action="{{ route('functionalities.store') }}">
