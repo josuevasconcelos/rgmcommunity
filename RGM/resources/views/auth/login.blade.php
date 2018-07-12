@@ -5,8 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
+                <img src="/uploads/avatars/default.jpg" class="user">
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -55,7 +54,7 @@
                                     {{ __('Login') }}
                                 </button>
 
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                <a id="forgetPassword" class="btn btn-link" href="{{ route('password.request') }}">
                                     {{ __('Forgot Your Password?') }}
                                 </a>
                             </div>
@@ -66,4 +65,16 @@
         </div>
     </div>
 </div>
+<!--<div class="loginBox">
+    <img src="/uploads/avatars/default.jpg" class="user">
+    <h2>Log In Here</h2>
+    <form>
+        <p>Email</p>
+        <input type="text" name="" placeholder="Enter Email">
+        <p>Password</p>
+        <input type="password" name="" placeholder="••••••">
+        <input type="submit" name="" value="Sign In">
+        <a href="#">Forget Password</a>
+    </form>
+</div>-->
 @endsection

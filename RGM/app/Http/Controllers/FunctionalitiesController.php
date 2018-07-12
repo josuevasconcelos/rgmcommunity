@@ -16,10 +16,11 @@ class FunctionalitiesController extends Controller
      */
     public function index()
     {
+        if(Auth::check()){
+            $functionalities = Functionality::paginate(5);
 
-        $functionalities = Functionality::all();
-
-        return view('functionalities.index', ['functionalities'=> $functionalities]);
+            return view('functionalities.index', ['functionalities'=> $functionalities]);
+        }
     }
 
     /**
@@ -29,7 +30,9 @@ class FunctionalitiesController extends Controller
      */
     public function create()
     {
-        return view('functionalities.create');
+        if(Auth::check()){
+            return view('functionalities.create');
+        }
     }
 
     /**
@@ -40,20 +43,22 @@ class FunctionalitiesController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        if(Auth::check()){
+        if(Auth::check()) {
             $functionality = Functionality::create([
                 'description' => $request->input('description'),
                 'url' => $request->input('url'),
             ]);
 
-            if($functionality){
-                return redirect()->route('functionalities.index', ['functionality' => $functionality->id])
-                    ->with('success', 'Company created');
+            if ($functionality) {
+                session()->flash('success_notification', 'Functionality created successfully');
+
+                return redirect()->route('functionalities.index');
+            } else {
+                session()->flash('error_notification', 'Error creating Functionality');
+
+                return redirect()->route('functionalities.index');
             }
         }
-
-        return back()->withInput()->with('error', 'Error creating');
     }
 
     /**
@@ -64,8 +69,11 @@ class FunctionalitiesController extends Controller
      */
     public function show(Functionality $functionality)
     {
-        $functionality = Functionality::find($functionality->id);
-        return view('functionalities.show', ['functionality'=>$functionality]);
+        if(Auth::check()){
+            $functionality = Functionality::find($functionality->id);
+
+            return view('functionalities.show', ['functionality'=>$functionality]);
+        }
     }
 
     /**
@@ -76,9 +84,11 @@ class FunctionalitiesController extends Controller
      */
     public function edit(Functionality $functionality)
     {
-        //
-        $functionality = Functionality::find($functionality->id);
-        return view('functionalities.edit', ['functionality'=>$functionality]);
+        if(Auth::check()){
+            $functionality = Functionality::find($functionality->id);
+
+            return view('functionalities.edit', ['functionality'=>$functionality]);
+        }
     }
 
     /**
@@ -90,16 +100,22 @@ class FunctionalitiesController extends Controller
      */
     public function update(Request $request, Functionality $functionality)
     {
-        $functionalityUpdate = Functionality::where('id', $functionality->id)->update([
-            'description' => $request->input('description'),
-        ]);
+        if(Auth::check()){
+            $functionalityUpdate = Functionality::where('id', $functionality->id)->update([
+                'description' => $request->input('description'),
+            ]);
 
-        if($functionalityUpdate){
-            return redirect()->route('functionalities.index', ['functionality'=>$functionality->id])
-                ->with('success', 'Company updated');
+            if($functionalityUpdate){
+                session()->flash('success_notification', 'Functionality updated successfully');
+
+                return redirect()->route('functionalities.index');
+            }
+            else{
+                session()->flash('error_notification', 'Error updating Functionality');
+
+                return redirect()->route('functionalities.index');
+            }
         }
-
-        return back()->withInput();
     }
 
     /**
@@ -110,13 +126,7 @@ class FunctionalitiesController extends Controller
      */
     public function destroy(Functionality $functionality)
     {
-        /*
-        $findFunctionality = Functionality::find($functionality->id);
-        if($findFunctionality->delete()){
-            return redirect()->route('functionalities')->with('success', 'Functionality deleted');
-        }
-
-        return back()->withInput()->with('error', 'Functionality not deleted');*/
+        //
     }
 
     public function searchFunctionality(Request $request){
@@ -124,14 +134,42 @@ class FunctionalitiesController extends Controller
             $output = "";
             $functionalities = DB::table('functionalities')->where('description', 'LIKE', '%'.$request->searchFunctionality.'%')->get();
 
-            foreach ($functionalities as $key => $functionality){
-                $output .= '<li class="list-group-item">'. $functionality->description.
-                    ' <a href="/functionalities/' . $functionality->id .
-                    '">View Details</a> | <a href="/functionalities/' . $functionality->id  .
-                    '/edit">Edit</a></li>';
+            if($functionalities->count() == 0){
+                $output .= '<ul class="list-group" id="error">
+                                <li class="list-group-item" id="searchNotFoundText">Functionalities not found</li>
+                            </ul>';
+
+                return Response($output);
             }
 
-            return Response($output);
+            if($functionalities){
+                $output .= '<ul class="list-group">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Description</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
+
+                foreach ($functionalities as $key => $functionality){
+                    $output .= '<tr>
+                                    <td>' . $functionality->id . '</td>
+                                    <td>' . $functionality->description . '</td>
+                                    <td class="buttonOnCenter">
+                                        <button type="button" class="btn btn-success btn-sm"><a class="textForButton" href="/functionalities/' . $functionality->id . '">Edit</a></button>
+                                    </td>
+                                </tr>';
+                }
+
+                $output .= '        </tbody>
+                                </table>
+                            </ul>';
+
+                return Response($output);
+            }
         }
     }
 }

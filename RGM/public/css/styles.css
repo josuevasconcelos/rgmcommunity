@@ -8,6 +8,20 @@
     font-size: 15px;
 }
 
+#pagination {
+    padding-top: 5px;
+}
+
+.textForButton {
+    color: white;
+    text-align: center;
+}
+
+.textForButton:hover{
+    text-decoration: none;
+    color: white;
+}
+
 .boxes {
     float: left;
     width: 40px;
@@ -61,4 +75,21 @@
 #search {
     background: url("../assets/searchIcon.png") no-repeat scroll 7px 7px;
     padding-left:30px;
+}
+
+#searchNotFoundText {
+    text-align: center;
+    font-weight: bold;
+}
+
+.buttonOnCenter {
+    text-align: center;
+}
+
+.successBox, .errorBox {
+    padding-top: 10px;
+}
+
+#btnSave {
+    display: none;
 }

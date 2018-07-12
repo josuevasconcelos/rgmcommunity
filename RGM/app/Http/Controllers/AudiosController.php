@@ -17,9 +17,11 @@ class AudiosController extends Controller
      */
     public function index()
     {
-        $audios = Audio::all();
+        if(Auth::check()){
+            $audios = Audio::paginate(5);
 
-        return view('audios.index', ['audios'=> $audios]);
+            return view('audios.index', ['audios'=> $audios]);
+        }
     }
 
     /**
@@ -29,7 +31,9 @@ class AudiosController extends Controller
      */
     public function create()
     {
-        return view('audios.create');
+        if(Auth::check()){
+            return view('audios.create');
+        }
     }
 
     /**
@@ -40,7 +44,6 @@ class AudiosController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         if(Auth::check()) {
             if ($request->hasFile('song')) {
                 $song = $request->file('song');
@@ -54,12 +57,15 @@ class AudiosController extends Controller
                 ]);
 
                 if ($audio) {
-                    return redirect()->route('audios.index', ['audio' => $audio->id])
-                        ->with('success', 'Audio created');
+                    session()->flash('success_notification', 'Audio created successfully');
+
+                    return redirect()->route('audios.index');
+                } else {
+                    session()->flash('error_notification', 'Error creating Audio');
+
+                    return redirect()->route('audios.index');
                 }
             }
-
-            return back()->withInput()->with('error', 'Error creating');
         }
     }
 
@@ -71,9 +77,11 @@ class AudiosController extends Controller
      */
     public function show(Audio $audio)
     {
-        $audio = Audio::find($audio->id);
+        if(Auth::check()){
+            $audio = Audio::find($audio->id);
 
-        return view('audios.show', ['audio'=>$audio]);
+            return view('audios.show', ['audio'=>$audio]);
+        }
     }
 
     /**
@@ -84,7 +92,11 @@ class AudiosController extends Controller
      */
     public function edit(Audio $audio)
     {
+        if(Auth::check()){
+            $audio = Audio::find($audio->id);
 
+            return view('audios.edit', ['audio'=>$audio]);
+        }
     }
 
     /**
@@ -96,7 +108,29 @@ class AudiosController extends Controller
      */
     public function update(Request $request, Audio $audio)
     {
+        if(Auth::check()) {
+            if ($request->hasFile('song')) {
+                $song = $request->file('song');
+                $filename = time() . '.' . $song->getClientOriginalExtension();
+                $song->move(public_path('/uploads/audios'), $filename);
 
+                $audio = Audio::where('id', $audio->id)->update([
+                    'artist' => $request->input('artist'),
+                    'name' => $request->input('name'),
+                    'song' => $filename
+                ]);
+
+                if ($audio) {
+                    session()->flash('success_notification', 'Audio updated successfully');
+
+                    return redirect()->route('audios.index');
+                } else {
+                    session()->flash('error_notification', 'Error updating Audio');
+
+                    return redirect()->route('audios.index');
+                }
+            }
+        }
     }
 
     /**
@@ -116,14 +150,46 @@ class AudiosController extends Controller
             $audios = DB::table('audios')->where('name', 'LIKE', '%'.$request->searchAudio.'%')
                 ->orWhere('artist', 'LIKE', '%'.$request->searchAudio.'%')->get();
 
-            foreach ($audios as $key => $audio){
-                $output .= '<li class="list-group-item">'. $audio->artist . " - " . $audio->name .
-                    ' <a href="/audios/' . $audio->id .
-                    '">View Details</a> | <a href="/audios/' . $audio->id  .
-                    '/edit">Edit</a></li>';
+            if($audios->count() == 0){
+                $output .= '<ul class="list-group" id="error">
+                                <li class="list-group-item" id="searchNotFoundText">Audios not found</li>
+                            </ul>';
+
+                return Response($output);
             }
 
-            return Response($output);
+            if($audios){
+
+                $output .= '<ul class="list-group">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Artist</th>
+                                            <th>Name</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
+
+                foreach ($audios as $key => $audio){
+                    $output .= '<tr>
+                                    <td>' . $audio->id . '</td>
+                                    <td>' . $audio->artist . '</td>
+                                    <td>' . $audio->name . '</td>
+                                    <td class="buttonOnCenter">
+                                        <button type="button" class="btn btn-primary btn-sm"><a class="textForButton" href="/audios/' . $audio->id . '">Listen Audio</a></button>
+                                        <button type="button" class="btn btn-success btn-sm"><a class="textForButton" href="/audios/' . $audio->id . '">Edit</a></button>
+                                    </td>
+                                </tr>';
+                }
+
+                $output .= '        </tbody>
+                                </table>
+                            </ul>';
+
+                return Response($output);
+            }
         }
     }
 }

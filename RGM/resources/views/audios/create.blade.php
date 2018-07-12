@@ -10,12 +10,12 @@
 
                     <div class="form-group">
                         <label for="audio-artist">Artist<span class="required">*</span></label>
-                        <input placeholder="Enter artist" id="audio-artist" required name="artist" spellcheck="false" class="form-control">
+                        <input placeholder="Enter artist" id="audio-artist" required name="artist" spellcheck="false" class="form-control col-lg-5">
                     </div>
 
                     <div class="form-group">
                         <label for="audio-name">Name<span class="required">*</span></label>
-                        <input placeholder="Enter name" id="audio-name" required name="name" spellcheck="false" class="form-control">
+                        <input placeholder="Enter name" id="audio-name" required name="name" spellcheck="false" class="form-control col-lg-5">
                     </div>
 
                     <div class="form-group">

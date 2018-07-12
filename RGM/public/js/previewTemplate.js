@@ -31,6 +31,19 @@ function showTemplate(){
             }
             table += '</table>';
         }
+        document.getElementById('btnPreviewTemplate').style.display = "none";
+        document.getElementById('btnSave').style.display = "inline";
         document.getElementById('createTemplateContent').innerHTML = table;
+    }
+
+    function createTemplateInstructions(){
+        swal({
+            title: "Instructions",
+            text: "1. Choose the components for your project and don't leave anything in blank \n\n" +
+            "2. After choose the template, the template will be drawn and you can drag the elements to the template's boxes. Don't leave any box without an element. \n\n" +
+            "3. If you want to delete an element from the box, just double-click that box and confirm that you want to delete the element. \n\n" +
+            "4. Once you have sure that your project is finished, click the 'Generate Information' button. \n\n" +
+            "5. To finish creating your project, click the 'Save' button.",
+        });
     }
 }

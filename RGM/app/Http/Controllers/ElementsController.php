@@ -17,9 +17,11 @@ class ElementsController extends Controller
      */
     public function index()
     {
-        $elements = Element::all();
+        if(Auth::check()){
+            $elements = Element::paginate(5);
 
-        return view('elements.index', ['elements'=> $elements]);
+            return view('elements.index', ['elements'=> $elements]);
+        }
     }
 
     /**
@@ -29,7 +31,9 @@ class ElementsController extends Controller
      */
     public function create()
     {
-        return view('elements.create');
+        if(Auth::check()){
+            return view('elements.create');
+        }
     }
 
     /**
@@ -41,23 +45,26 @@ class ElementsController extends Controller
     public function store(Request $request)
     {
         if(Auth::check()){
-            if($request->hasFile('image')){
+            if($request->hasFile('image')) {
                 $image = $request->file('image');
                 $filename = time() . '.' . $image->getClientOriginalExtension();
-                Image::make($image)->save( public_path('/uploads/elements/' . $filename) );
+                Image::make($image)->save(public_path('/uploads/elements/' . $filename));
 
                 $element = Element::create([
                     'name' => $request->input('name'),
                     'image' => $filename,
                 ]);
 
-                if($element){
-                    return redirect()->route('elements.index', ['element' => $element->id])
-                        ->with('success', 'Element created');
+                if ($element) {
+                    session()->flash('success_notification', 'Element created successfully');
+
+                    return redirect()->route('elements.index');
+                } else {
+                    session()->flash('error_notification', 'Error creating Element');
+
+                    return redirect()->route('elements.index');
                 }
             }
-
-            return back()->withInput()->with('error', 'Error creating');
         }
     }
 
@@ -69,8 +76,10 @@ class ElementsController extends Controller
      */
     public function show(Element $element)
     {
-        $element = Element::find($element->id);
-        return view('elements.show', ['element'=>$element]);
+        if(Auth::check()){
+            $element = Element::find($element->id);
+            return view('elements.show', ['element'=>$element]);
+        }
     }
 
     /**
@@ -81,7 +90,10 @@ class ElementsController extends Controller
      */
     public function edit(Element $element)
     {
-        //
+        if(Auth::check()){
+            $element = Element::find($element->id);
+            return view('elements.edit', ['element'=>$element]);
+        }
     }
 
     /**
@@ -93,7 +105,29 @@ class ElementsController extends Controller
      */
     public function update(Request $request, Element $element)
     {
-        //
+
+        if(Auth::check()) {
+            if($request->hasFile('image')){
+                $image = $request->file('image');
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                Image::make($image)->save(public_path('/uploads/elements/' . $filename));
+
+                $element = Element::where('id', $element->id)->update([
+                    'name' => $request->input('name'),
+                    'image' => $filename,
+                ]);
+
+                if ($element) {
+                    session()->flash('success_notification', 'Element updated successfully');
+
+                    return redirect()->route('elements.index');
+                } else {
+                    session()->flash('error_notification', 'Error updating Element');
+
+                    return redirect()->route('elements.index');
+                }
+            }
+        }
     }
 
     /**
@@ -112,14 +146,43 @@ class ElementsController extends Controller
             $output = "";
             $elements = DB::table('elements')->where('name', 'LIKE', '%'.$request->searchElement.'%')->get();
 
-            foreach ($elements as $key => $element){
-                $output .= '<li class="list-group-item">'. $element->name .
-                    ' <a href="/elements/' . $element->id .
-                    '">View Details</a> | <a href="/elements/' . $element->id  .
-                    '/edit">Edit</a></li>';
+            if($elements->count() == 0){
+                $output .= '<ul class="list-group" id="error">
+                                <li class="list-group-item" id="searchNotFoundText">Elements not found</li>
+                            </ul>';
+
+                return Response($output);
             }
 
-            return Response($output);
+            if($elements){
+                $output .= '<ul class="list-group">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
+
+                foreach ($elements as $key => $element){
+                    $output .= '<tr>
+                                    <td>' . $element->id . '</td>
+                                    <td>' . $element->name . '</td>
+                                    <td class="buttonOnCenter">
+                                        <button type="button" class="btn btn-primary btn-sm"><a class="textForButton" href="/elements/' . $element->id . '">View Element</a></button>
+                                        <button type="button" class="btn btn-success btn-sm"><a class="textForButton" href="/elements/' . $element->id . '">Edit</a></button>
+                                    </td>
+                                </tr>';
+                }
+
+                $output .= '        </tbody>
+                                </table>
+                            </ul>';
+
+                return Response($output);
+            }
         }
     }
 }

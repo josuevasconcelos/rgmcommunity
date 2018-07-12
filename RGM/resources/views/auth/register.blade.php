@@ -9,8 +9,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
+                <img src="/uploads/avatars/default.jpg" class="user">
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -196,8 +195,6 @@
                                 @endif
                             </div>
                         </div>
-
-                        <!--<input id="role_id" type="number" class="form-control{{ $errors->has('role_id') ? ' is-invalid' : '' }}" name="role_id" value="{{ old('role_id') }}" required autofocus>-->
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

@@ -28,6 +28,7 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
     <div class="sidenav">
+        <p id="menuText">RGM Menu</p>
         @foreach($roles as $role)
             @if($user->role_id == $role->id)
                 @foreach($role->functionalities as $functionality)
@@ -38,8 +39,6 @@
     </div>
 
     <div class="main">
-        @include('partials.errors')
-        @include('partials.success')
         @yield('content')
     </div>
 

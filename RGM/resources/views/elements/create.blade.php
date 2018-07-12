@@ -10,7 +10,7 @@
 
                     <div class="form-group">
                         <label for="element-name">Name<span class="required">*</span></label>
-                        <input placeholder="Enter name" id="element-name" required name="name" spellcheck="false" class="form-control">
+                        <input placeholder="Enter name" id="element-name" required name="name" spellcheck="false" class="form-control col-lg-5  ">
                     </div>
 
                     <div class="form-group">

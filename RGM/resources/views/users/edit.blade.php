@@ -19,7 +19,11 @@
                         <label for="user-role_id">Role<span class="required">*</span></label>
                         <select id="user-role_id" name="role_id">
                             @foreach($roles as $role)
-                                <option value="{{ $role->id }}"> {{ $role->description }}</option>
+                                @if($role->id == $user->role_id)
+                                    <option selected value="{{ $role->id }}"> {{ $role->description }}</option>
+                                @else
+                                    <option value="{{ $role->id }}"> {{ $role->description }}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>

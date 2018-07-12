@@ -1,0 +1,138 @@
+html, body {
+    background-color: #ffffff;
+    color: #ff5d00;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 100;
+    height: 100vh;
+    margin: 0;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+
+.content {
+    text-align: center;
+}
+
+.title {
+    font-size: 84px;
+}
+
+#title {
+    font-weight: 550;
+}
+
+#subtitle {
+    font-size: 35px;
+    font-weight: 550;
+}
+
+.links > a {
+    color: #ff5d00;
+    padding: 0 25px;
+    font-size: 13px;
+    font-weight: 1000;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.links > a:hover {
+    color: #fff008;
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+}
+
+#slider {
+    background-size: cover;
+    width: 100%;
+    height: 100hv;
+    animation: slide 60s infinite;
+}
+
+.load {
+    animation: slide 2s;
+}
+
+.content {
+    color: #fff;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.principal {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    letter-spacing: 5px;
+    text-align: center;
+}
+
+.principal h1 {
+    font-size: 70px;
+    margin-bottom: 20px;
+}
+
+.principal p {
+    font-size: 20px;
+}
+
+@keyframes slide {
+
+    0% {
+        background-image: url('../assets/backgroundImages/image1.jpg')
+    }
+    20% {
+        background-image: url('../assets/backgroundImages/image1.jpg')
+    }
+
+    20.01% {
+        background-image: url('../assets/backgroundImages/image2.jpg')
+    }
+    40% {
+        background-image: url('../assets/backgroundImages/image2.jpg')
+    }
+
+    40.01% {
+        background-image: url('../assets/backgroundImages/image3.jpg')
+    }
+    60% {
+        background-image: url('../assets/backgroundImages/image3.jpg')
+    }
+
+    60.01% {
+        background-image: url('../assets/backgroundImages/image4.jpg')
+    }
+    80% {
+        background-image: url('../assets/backgroundImages/image4.jpg')
+    }
+
+    80.01% {
+        background-image: url('../assets/backgroundImages/image5.jpg')
+    }
+    100% {
+        background-image: url('../assets/backgroundImages/image5.jpg')
+    }
+
+}

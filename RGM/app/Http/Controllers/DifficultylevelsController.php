@@ -16,9 +16,11 @@ class DifficultylevelsController extends Controller
      */
     public function index()
     {
-        $difficultylevels = Difficultylevel::all();
+        if(Auth::check()){
+            $difficultylevels = Difficultylevel::paginate(5);
 
-        return view('difficultylevels.index', ['difficultylevels'=> $difficultylevels]);
+            return view('difficultylevels.index', ['difficultylevels'=> $difficultylevels]);
+        }
     }
 
     /**
@@ -28,7 +30,9 @@ class DifficultylevelsController extends Controller
      */
     public function create()
     {
-        return view('difficultylevels.create');
+        if(Auth::check()){
+            return view('difficultylevels.create');
+        }
     }
 
     /**
@@ -45,12 +49,16 @@ class DifficultylevelsController extends Controller
             ]);
 
             if($difficultylevel){
-                return redirect()->route('difficultylevels.index', ['difficultylevel' => $difficultylevel->id])
-                    ->with('success', 'Difficulty level created with success');
+                session()->flash('success_notification', 'Difficulty Level created successfully');
+
+                return redirect()->route('difficultylevels.index');
+            }
+            else{
+                session()->flash('error_notification', 'Error creating Difficulty Level');
+
+                return redirect()->route('difficultylevels.index');
             }
         }
-
-        return back()->withInput()->with('error', 'Error creating difficulty level');
     }
 
     /**
@@ -72,9 +80,11 @@ class DifficultylevelsController extends Controller
      */
     public function edit(Difficultylevel $difficultylevel)
     {
-        $difficultylevel = Difficultylevel::find($difficultylevel->id);
+        if(Auth::check()){
+            $difficultylevel = Difficultylevel::find($difficultylevel->id);
 
-        return view('difficultylevels.edit', ['difficultylevel'=>$difficultylevel]);
+            return view('difficultylevels.edit', ['difficultylevel'=>$difficultylevel]);
+        }
     }
 
     /**
@@ -86,16 +96,22 @@ class DifficultylevelsController extends Controller
      */
     public function update(Request $request, Difficultylevel $difficultylevel)
     {
-        $difficultylevelUpdate = Difficultylevel::where('id', $difficultylevel->id)->update([
-            'description' => $request->input('description'),
-        ]);
+        if(Auth::check()){
+            $difficultylevelUpdate = Difficultylevel::where('id', $difficultylevel->id)->update([
+                'description' => $request->input('description'),
+            ]);
 
-        if($difficultylevelUpdate){
-            return redirect()->route('difficultylevels.index', ['difficultylevel'=>$difficultylevel->id])
-                ->with('success', 'Difficulty Level updated');
+            if($difficultylevelUpdate){
+                session()->flash('success_notification', 'Difficulty Level updated with success');
+
+                return redirect()->route('difficultylevels.index');
+            }
+            else{
+                session()->flash('error_notification', 'Error updating Difficulty Level');
+
+                return redirect()->route('difficultylevels.index');
+            }
         }
-
-        return back()->withInput();
     }
 
     /**
@@ -106,7 +122,51 @@ class DifficultylevelsController extends Controller
      */
     public function destroy(Difficultylevel $difficultylevel)
     {
-        //
+        
+    }
+
+    public function searchDifficultylevel(Request $request){
+        if($request->ajax()){
+            $output = "";
+            $difficultylevels = DB::table('difficultyLevels')->where('description', 'LIKE', '%'.$request->searchDifficultylevel.'%')->get();
+
+            if($difficultylevels->count() == 0){
+                $output .= '<ul class="list-group" id="error">
+                                <li class="list-group-item" id="searchNotFoundText">Difficulty Levels not found</li>
+                            </ul>';
+
+                return Response($output);
+            }
+
+            if($difficultylevels){
+                $output .= '<ul class="list-group">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Description</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
+
+                foreach ($difficultylevels as $key => $difficultylevel){
+                    $output .= '<tr>
+                                    <td>' . $difficultylevel->id . '</td>
+                                    <td>' . $difficultylevel->description . '</td>
+                                    <td class="buttonOnCenter">
+                                        <button type="button" class="btn btn-success btn-sm"><a class="textForButton" href="/difficultylevels/' . $difficultylevel->id . '">Edit</a></button>
+                                    </td>
+                                </tr>';
+                }
+
+                $output .= '        </tbody>
+                                </table>
+                            </ul>';
+
+                return Response($output);
+            }
+        }
     }
 
 

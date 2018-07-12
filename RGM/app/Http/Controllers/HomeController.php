@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Role;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -25,9 +26,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(Auth::check()){
+            $roles = Role::all();
 
-        $roles = Role::all();
-
-        return view('home', ['roles'=> $roles]);
+            return view('home', ['roles'=> $roles]);
+        }
     }
 }

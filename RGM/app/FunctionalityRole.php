@@ -13,4 +13,5 @@ class FunctionalityRole extends Model
         'functionality_id',
         'role_id',
     ];
+
 }

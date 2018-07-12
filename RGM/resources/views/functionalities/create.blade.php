@@ -10,12 +10,12 @@
 
                     <div class="form-group">
                         <label for="functionality-description">Description<span class="required">*</span></label>
-                        <input placeholder="Enter description" id="functionality-description" required name="description" spellcheck="false" class="form-control">
+                        <input placeholder="Enter description" id="functionality-description" required name="description" spellcheck="false" class="form-control col-lg-5">
                     </div>
 
                     <div class="form-group">
                         <label for="functionality-url">URL<span class="required">*</span></label>
-                        <input placeholder="Enter URL" id="functionality-url" required name="url" spellcheck="false" class="form-control">
+                        <input placeholder="Enter URL" id="functionality-url" required name="url" spellcheck="false" class="form-control col-lg-5">
                     </div>
 
                     <div class="form-group">

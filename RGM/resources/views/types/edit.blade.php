@@ -12,7 +12,7 @@
 
                     <div class="form-group">
                         <label for="type-description">Description<span class="required">*</span></label>
-                        <input placeholder="Enter description" id="type-description" required name="description" spellcheck="false" class="form-control" value="{{ $type->description }}">
+                        <input placeholder="Enter description" id="type-description" required name="description" spellcheck="false" class="form-control col-lg-5" value="{{ $type->description }}">
                     </div>
 
                     <div class="form-group">

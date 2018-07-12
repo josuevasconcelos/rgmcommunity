@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/RGM/tests" isTestSource="true" packagePrefix="Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/RGM/app" isTestSource="false" packagePrefix="App\" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/dnoegel/php-xdg-base-dir" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/doctrine/inflector" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/doctrine/instantiator" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/doctrine/lexer" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/dragonmantank/cron-expression" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/egulias/email-validator" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/erusev/parsedown" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/fideloper/proxy" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/filp/whoops" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/fzaninotto/faker" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/guzzlehttp/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/hamcrest/hamcrest-php" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/intervention/image" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/jakub-onderka/php-console-color" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/jakub-onderka/php-console-highlighter" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/laravel/framework" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/laravel/tinker" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/league/flysystem" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/mockery/mockery" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/monolog/monolog" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/myclabs/deep-copy" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/nesbot/carbon" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/nikic/php-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/nunomaduro/collision" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/paragonie/random_compat" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/phar-io/manifest" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/phar-io/version" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/phpdocumentor/reflection-common" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/phpdocumentor/reflection-docblock" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/phpdocumentor/type-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/phpspec/prophecy" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/phpunit/php-code-coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/phpunit/php-file-iterator" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/phpunit/php-text-template" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/phpunit/php-timer" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/phpunit/php-token-stream" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/phpunit/phpunit" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/phpunit/phpunit-mock-objects" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/psr/container" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/psr/simple-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/psy/psysh" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/ramsey/uuid" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/sebastian/code-unit-reverse-lookup" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/sebastian/comparator" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/sebastian/diff" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/sebastian/environment" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/sebastian/exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/sebastian/global-state" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/sebastian/object-enumerator" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/sebastian/object-reflector" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/sebastian/recursion-context" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/sebastian/resource-operations" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/sebastian/version" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/swiftmailer/swiftmailer" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/symfony/console" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/symfony/css-selector" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/symfony/debug" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/symfony/event-dispatcher" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/symfony/finder" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/symfony/http-foundation" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/symfony/http-kernel" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/symfony/polyfill-ctype" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/symfony/polyfill-php72" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/symfony/process" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/symfony/routing" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/symfony/translation" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/symfony/var-dumper" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/theseer/tokenizer" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/tijsverkoyen/css-to-inline-styles" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/uxweb/sweet-alert" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/vlucas/phpdotenv" />
+      <excludeFolder url="file://$MODULE_DIR$/RGM/vendor/webmozart/assert" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

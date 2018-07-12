@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class RolesController extends Controller
@@ -15,10 +16,11 @@ class RolesController extends Controller
      */
     public function index()
     {
-        //
-        $roles = Role::all();
+        if(Auth::check()){
+            $roles = Role::paginate(5);
 
-        return view('roles.index', ['roles'=> $roles]);
+            return view('roles.index', ['roles'=> $roles]);
+        }
     }
 
     /**
@@ -50,9 +52,11 @@ class RolesController extends Controller
      */
     public function show(Role $role)
     {
-        //
-        $role = Role::find($role->id);
-        return view('roles.show', ['role'=>$role]);
+        if(Auth::check()){
+            $role = Role::find($role->id);
+
+            return view('roles.show', ['role'=>$role]);
+        }
     }
 
     /**
@@ -90,7 +94,7 @@ class RolesController extends Controller
     }
 
     public function searchRole(Request $request){
-        if($request->ajax()){
+        /*if($request->ajax()){
             $output = "";
             $roles = DB::table('roles')->where('description', 'LIKE', '%'.$request->searchRole.'%')->get();
 
@@ -101,6 +105,44 @@ class RolesController extends Controller
             }
 
             return Response($output);
+        }*/
+
+        if($request->ajax()){
+            $output = "";
+            $roles = DB::table('roles')->where('description', 'LIKE', '%'.$request->searchRole.'%')->get();
+
+            if($roles->count() == 0){
+                $output .= '<ul class="list-group" id="error">
+                                <li class="list-group-item" id="searchNotFoundText">Roles not found</li>
+                            </ul>';
+
+                return Response($output);
+            }
+
+            if($roles){
+                $output .= '<ul class="list-group">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
+
+                foreach ($roles as $key => $role){
+                    $output .= '<tr>
+                                    <td>' . $role->id . '</td>
+                                    <td>' . $role->description . '</td>
+                                </tr>';
+                }
+
+                $output .= '        </tbody>
+                                </table>
+                            </ul>';
+
+                return Response($output);
+            }
         }
     }
 }

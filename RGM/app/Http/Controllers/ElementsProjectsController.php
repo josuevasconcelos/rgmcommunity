@@ -38,8 +38,6 @@ class ElementsProjectsController extends Controller
     public function store(Request $request)
     {
         //
-        $project_id = Session::get('project_id');
-        echo $project_id;
     }
 
     /**

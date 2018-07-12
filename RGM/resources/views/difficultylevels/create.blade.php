@@ -10,7 +10,7 @@
 
                     <div class="form-group">
                         <label for="difficultylevel-description">Description<span class="required">*</span></label>
-                        <input placeholder="Enter description" id="difficultylevel-description" required name="description" spellcheck="false" class="form-control">
+                        <input placeholder="Enter description" id="difficultylevel-description" required name="description" spellcheck="false" class="form-control col-lg-5">
                     </div>
 
                     <div class="form-group">
